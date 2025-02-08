@@ -1,0 +1,14 @@
+name: nn_env
+channels:
+    - defaults
+    - conda-forge
+dependencies:
+    - python=3.12.1
+    - pytorch
+    - numpy
+    - pandas
+    - scikit-learn
+    - seaborn
+    - tqdm
+    - matplotlib
+    - jupyterlab
