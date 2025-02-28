@@ -94,7 +94,6 @@ class StandardScaler:
     
     def transform(self, x):
         # YOUR_CODE
-
         x_scaled = (x-self.x_mean)/self.x_std
 
         return x_scaled
