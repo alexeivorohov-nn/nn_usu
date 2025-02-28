@@ -98,6 +98,11 @@ class StandardScaler:
 
         return x_scaled
     
+    def fit_transform(self, x):
+
+        self.fit(x)
+        return self.transform(x)
+    
     def inverse(self, x):
         # YOUR_CODE
         x_scaled = x*self.x_std + self.x_mean
