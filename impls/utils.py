@@ -67,16 +67,33 @@ class BatchSampler:
         self.batch_size = batch_size
         self.n_batches = n_batches
 
-        pass
+        # Validate input constraints
+        if self.batch_size * self.n_batches > self.x_size:
+            raise ValueError(
+                f"Product of batch_size ({batch_size}) and n_batches ({n_batches}) "
+                f"exceeds dataset size {self.x_size}. Cannot sample without repetition."
+            )
 
     def sample(self):
-
+        
+        # Generate single permutation for all batches
+        full_perm = torch.randperm(self.x_size)
+        total_samples = self.batch_size * self.n_batches
+        
+        # Select contiguous indices from permutation
+        selected_indices = full_perm[:total_samples]
+        
+        # Create non-overlapping batches
         batches = []
         for i in range(self.n_batches):
-            perm = torch.randperm(self.x_size)[0:self.batch_size]
-
-            batches.append((self.X_train[perm], self.y_train[perm]))
-
+            start = i * self.batch_size
+            end = start + self.batch_size
+            batch_indices = selected_indices[start:end]
+            
+            batches.append(
+                (self.X_train[batch_indices], self.y_train[batch_indices])
+            )
+        
         return batches
     
 
