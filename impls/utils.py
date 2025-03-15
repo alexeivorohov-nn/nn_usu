@@ -43,19 +43,6 @@ class TimeseriesLoader():
             raise StopIteration
 
 
-if __name__ == '__main__':
-
-    A = torch.randn((8, 2))
-
-    loader = TimeseriesLoader(A, 2, 2, 1)
-
-    for d in loader:
-        print(d)
-
-
-    pass
-
-
 class BatchSampler:
 
     def __init__(self, X_train, y_train, batch_size, n_batches):
@@ -99,6 +86,7 @@ class BatchSampler:
 
 class StandardScaler:
 
+
     def __init__(self):
         pass
 
@@ -125,3 +113,17 @@ class StandardScaler:
         x_scaled = x*self.x_std + self.x_mean
 
         return x_scaled
+    
+
+if __name__ == '__main__':
+
+    A = torch.randn((8, 2))
+
+    loader = TimeseriesLoader(A, 2, 2, 1)
+
+    for d in loader:
+        print(d)
+
+
+    pass
+
