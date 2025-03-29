@@ -3,4 +3,5 @@ from .layer import *
 from .loss import *
 from .module import *
 from .tensor_autograd import *
-from .functional import *
+from .utils import *
+from .plots import *
