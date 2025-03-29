@@ -11,9 +11,12 @@ def decision_plot(model: torch.nn.Module,
                   alpha = 0.2,
                   x_bounds = None,
                   figsize = (8,8),
-                  legend = True
+                  legend = True,
+                  ax = None
                   ):
     
+    show_on_finish = False
+
     # Extract labels from additional data
     data_lbl_dict = {}
 
@@ -65,13 +68,15 @@ def decision_plot(model: torch.nn.Module,
     levels = (np.arange(N_classes+1) - 0.5)
 
     # Create figure
-    plt.figure(figsize=figsize)
+    if ax == None:
+        fig, ax = plt.subplots(1,1,figsize=figsize)
+        show_on_finish = True
 
     # Plot decision regions with solid colors
     if data_transform != None:
         pass
 
-    plt.contourf(x1.numpy(), x2.numpy(), Z_class, 
+    ax.contourf(x1.numpy(), x2.numpy(), Z_class, 
                 levels=levels, 
                 alpha=alpha, 
                 cmap=cmap)
@@ -96,18 +101,20 @@ def decision_plot(model: torch.nn.Module,
                 msize = 20.0
 
             lbl = key + '_' + classes[k]
-            plt.scatter(val['X'][mask, 0], val['X'][mask, 1],
+            ax.scatter(val['X'][mask, 0], val['X'][mask, 1],
                         marker=mark, edgecolor='w', s=msize,
                         color=cmap(k), label=lbl)
             
-    plt.xlabel(r"$x_1$", fontsize=14)
-    plt.ylabel(r"$x_2$", fontsize=14)
-    plt.xlim(x1_min, x1_max)
-    plt.ylim(x2_min, x2_max)
+    ax.set_xlabel(r"$x_1$", fontsize=14)
+    ax.set_ylabel(r"$x_2$", fontsize=14)
+    ax.set_xlim(x1_min, x1_max)
+    ax.set_ylim(x2_min, x2_max)
 
-    plt.grid('on')
-    plt.legend()
-    plt.show()
+    ax.grid('on')
+    ax.legend()
+
+    if show_on_finish:
+        plt.show()
 
 
 def plot_2d(data = None,
@@ -117,9 +124,12 @@ def plot_2d(data = None,
             alpha = 0.2,
             x_bounds = None,
             figsize = (8,8),
-            legend = True
+            legend = True,
+            ax = None
             ):
     
+    show_on_finish = False
+
     N_classes = 0
     data_lbls = {}
     x1_min = []
@@ -150,6 +160,10 @@ def plot_2d(data = None,
         vals = np.linspace(0,1,N_classes)
         cmap = plt.cm.colors.ListedColormap(plt.cm.jet(vals))
 
+    if ax == None:
+        fig, ax = plt.subplots(1,1,figsize=figsize)
+        show_on_finish = True
+
     for key, val in data.items():
         for k in range(N_classes):
             mask = (data_lbls[key] == k)
@@ -165,16 +179,18 @@ def plot_2d(data = None,
                 msize = 20.0
 
             lbl = key + '_' + classes[k]
-            plt.scatter(val['X'][mask, 0], val['X'][mask, 1],
+            ax.scatter(val['X'][mask, 0], val['X'][mask, 1],
                         marker=mark, edgecolor='w', s=msize,
                         color=cmap(k), label=lbl)
             
             
-    plt.xlabel(r"$x_1$", fontsize=14)
-    plt.ylabel(r"$x_2$", fontsize=14)
-    plt.xlim(x1_min, x1_max)
-    plt.ylim(x2_min, x2_max)
+    ax.set_xlabel(r"$x_1$", fontsize=14)
+    ax.set_ylabel(r"$x_2$", fontsize=14)
+    ax.set_xlim(x1_min, x1_max)
+    ax.set_ylim(x2_min, x2_max)
 
-    plt.grid('on')
-    plt.legend()
-    plt.show()
+    ax.grid('on')
+    ax.legend()
+    
+    if show_on_finish:
+        plt.show()
