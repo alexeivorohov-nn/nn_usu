@@ -18,31 +18,36 @@ def decision_plot(model: torch.nn.Module,
     show_on_finish = False
 
     # Extract labels from additional data
-    data_lbl_dict = {}
+    data_lbls = {}
+    N_classes = 0
+
+    for key, val in add_data.items():
+        data_lbls[key] = torch.argmax(val['y'], dim=1)
+        N_classes = max(N_classes, len(torch.unique(data_lbls[key])))
+
 
     # Define bounds
-    x1_min, x1_max = -1.5, 1.5
-    x2_min, x2_max = -1.5, 1.5
-
-    if len(add_data) > 0:
-
+    if x_bounds != None:
+        x1_min, x1_max = x_bounds[0]
+        x2_min, x2_max = x_bounds[1]
+    else:
         x1_min = []
         x1_max = []
         x2_min = []
         x2_max = []
-
         for key, val in add_data.items():
             x1_min.append(min(val['X'][:, 0]))
             x1_max.append(max(val['X'][:, 0]))
             x2_min.append(min(val['X'][:, 1]))
             x2_max.append(max(val['X'][:, 1]))
-            data_lbl_dict[key] = torch.argmax(val['y'], dim=1)
 
         x1_min = min(x1_min)
         x1_max = max(x1_max)
         x2_min = min(x2_min)
         x2_max = max(x2_max)
 
+
+    
     # Generate grid using PyTorch
     x1_ = torch.linspace(x1_min, x1_max, grid_n[0])
     x2_ = torch.linspace(x2_min, x2_max, grid_n[1]) 
@@ -82,36 +87,21 @@ def decision_plot(model: torch.nn.Module,
                 cmap=cmap)
  
     # Plot test points using class indices 
+    if add_data != None:
+        plot_2d(data=add_data,\
+                data_transform = data_transform,
+                classes = classes,
+                cmap = cmap,
+                x_bounds=x_bounds,
+                legend=legend,
+                ax = ax)
+    else:
+        ax.set_xlim(x1_min, x1_max)
+        ax.set_ylim(x2_min, x2_max)
 
-    if classes == None:
-        classes = [f'{i}' for i in range(N_classes)]
+        ax.grid('on')
+        ax.legend()
 
-    for key, val in add_data.items():
-        for k in range(N_classes):
-            mask = (data_lbl_dict[key] == k)
-
-            try:
-                mark = val['m']
-            except:
-                mark = ','
-
-            try:
-                msize = val['msize']
-            except:
-                msize = 20.0
-
-            lbl = key + '_' + classes[k]
-            ax.scatter(val['X'][mask, 0], val['X'][mask, 1],
-                        marker=mark, edgecolor='w', s=msize,
-                        color=cmap(k), label=lbl)
-            
-    ax.set_xlabel(r"$x_1$", fontsize=14)
-    ax.set_ylabel(r"$x_2$", fontsize=14)
-    ax.set_xlim(x1_min, x1_max)
-    ax.set_ylim(x2_min, x2_max)
-
-    ax.grid('on')
-    ax.legend()
 
     if show_on_finish:
         plt.show()
@@ -121,7 +111,6 @@ def plot_2d(data = None,
             data_transform = None,
             classes = None,
             cmap = None,
-            alpha = 0.2,
             x_bounds = None,
             figsize = (8,8),
             legend = True,
@@ -186,6 +175,11 @@ def plot_2d(data = None,
             
     ax.set_xlabel(r"$x_1$", fontsize=14)
     ax.set_ylabel(r"$x_2$", fontsize=14)
+
+    if x_bounds != None:
+        x1_min, x1_max = x_bounds[0]
+        x2_min, x2_max = x_bounds[1]
+
     ax.set_xlim(x1_min, x1_max)
     ax.set_ylim(x2_min, x2_max)
 

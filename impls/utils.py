@@ -45,13 +45,17 @@ class TimeseriesLoader():
 
 class BatchSampler:
 
-    def __init__(self, X_train, y_train, batch_size, n_batches):
+    def __init__(self, X_train, y_train, batch_size, n_batches=None):
 
         self.X_train = X_train
         self.y_train = y_train
         self.x_size = X_train.shape[0]
 
         self.batch_size = batch_size
+
+        if n_batches == None:
+            n_batches = self.x_size // batch_size
+
         self.n_batches = n_batches
         
         # Validate input constraints
