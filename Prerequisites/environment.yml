@@ -1,14 +1,22 @@
 name: nn_env
 channels:
     - defaults
+    - pytorch-nightly
     - conda-forge
 dependencies:
-    - python=3.12.1
-    - pytorch
+    - python=3.12
+    - pip
+    - gensim
+    - pip:
+      - torch --extra-index-url https://download.pytorch.org/whl/cpu
+      - torchinfo
     - numpy
     - pandas
     - scikit-learn
+    - torchinfo
     - seaborn
     - tqdm
     - matplotlib
+    - seaborn
     - jupyterlab
+    - mlflow
