@@ -8,6 +8,7 @@ dependencies:
     - pip
     - gensim
     - h5py
+    - transformers
     - torch
     - torchinfo
     - tqdm
