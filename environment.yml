@@ -1,0 +1,23 @@
+name: nn_env
+channels:
+    - defaults
+    - conda-forge
+dependencies:
+    - python=3.12
+    - pip
+    - gensim
+    - pytorch=2.8.0
+    - transformers
+    - numpy
+    - pandas
+    - scikit-learn
+    - torchinfo
+    - seaborn
+    - tqdm
+    - matplotlib
+    - seaborn
+    - jupyterlab
+    - mlflow
+    - lightning
+    - optuna
+    - tensorboard
