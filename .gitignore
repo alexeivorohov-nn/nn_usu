@@ -28,6 +28,9 @@ coverage.xml
 # Translations
 *.mo
 
-
 # Data path:
 /data
+
+/*.txt
+/*.json
+*.log
