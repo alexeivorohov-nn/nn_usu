@@ -8,14 +8,14 @@ dependencies:
     - gensim
     - pytorch=2.8.0
     - transformers
+    - h5py
+    - torchinfo
+    - tqdm
     - numpy
     - pandas
     - scikit-learn
-    - torchinfo
     - seaborn
-    - tqdm
     - matplotlib
-    - seaborn
     - jupyterlab
     - mlflow
     - lightning
