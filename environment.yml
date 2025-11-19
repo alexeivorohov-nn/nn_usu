@@ -1,19 +1,23 @@
 name: nn_env
 channels:
     - defaults
-    - pytorch-nightly
     - conda-forge
 dependencies:
-    - python=3.12
+    - python=3.13
     - pip
-    - gensim
-    - pytorch # pytorch-cpu for cpu-only 
+    # - pytorch # complete installation 
+    - pytorch-cpu=2.8 # for cpu-only 
+    - lightning
+    - transformers
+    - datasets
+    - torchvision
     - numpy
     - pandas
     - scikit-learn
     - torchinfo
-    - seaborn
     - matplotlib
     - seaborn
     - jupyterlab
     - mlflow
+    - optuna
+
