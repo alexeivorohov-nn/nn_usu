@@ -30,6 +30,7 @@ coverage.xml
 # Data path:
 /data/*
 /dev
+/runs
 
 /*.txt
 /*.json

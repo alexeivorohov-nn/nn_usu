@@ -5,8 +5,8 @@ channels:
 dependencies:
     - python=3.13
     - pip
-    # - pytorch # complete installation 
-    - pytorch-cpu=2.8 # for cpu-only 
+    # - pytorch-cpu=2.8 # cpu-only
+    - pytorch-gpu # for cuda
     - lightning
     - transformers
     - datasets
